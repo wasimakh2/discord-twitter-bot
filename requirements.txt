@@ -1,4 +1,4 @@
-aiohttp==3.5.4
+aiohttp==3.8.0
 async-timeout==3.0.1
 attrs==19.1.0
 certifi==2019.3.9
@@ -28,3 +28,4 @@ pluggy==0.9.0
 py==1.8.0
 tox==3.9.0
 virtualenv==16.4.3
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
