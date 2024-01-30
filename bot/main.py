@@ -12,7 +12,7 @@ try:
 except ModuleNotFoundError:
     from bot.utils.processor import Processor
 try:
-    from config import config, auth
+    from bot.config import config, auth
 except ModuleNotFoundError:
     from bot.config import config, auth
 try:
@@ -80,7 +80,7 @@ class StdOutListener(StreamListener):
 
 if __name__ == "__main__":
     print("Bot started.")
-    config = Converter(config, auth).convert()
+    config = {"Discord": {"twitter_ids": [...], "track": [...], "location": [...], "webhook_urls": [...]}}
     print(config)
     follow = []
     track = []
