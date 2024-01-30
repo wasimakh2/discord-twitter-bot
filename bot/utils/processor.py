@@ -65,6 +65,8 @@ def worth_posting_location(location, coordinates=[]):
 
 
 def worth_posting_track(track, hashtags, text):
+    if not track:
+        return False
     for t in track:
         if t.startswith("#"):
             if t[1:] in map(lambda x: x["text"], hashtags):
@@ -166,6 +168,8 @@ class Processor:
                 self.status_tweet["entities"]["hashtags"], key=lambda k: k["text"], reverse=True
             )
 
+        if not self.discord_config.get("track", []):
+            return False
         return worth_posting_track(
             track=self.discord_config.get("track", []), hashtags=hashtags, text=self.text
         )
