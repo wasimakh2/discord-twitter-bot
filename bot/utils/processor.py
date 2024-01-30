@@ -54,17 +54,19 @@ COLORS = [
 WH_REGEX = r"discord(app)?\.com\/api\/webhooks\/(?P<id>\d+)\/(?P<token>.+)"
 
 
-def worth_posting_location(location, coordinates):
+def worth_posting_location(location, coordinates=[]):
     location = [location[i : i + 4] for i in range(0, len(location), 4)]
 
     for box in location:
         for coordinate in coordinates:
             if box[0] < coordinate[0] < box[2] and box[1] < coordinate[1] < box[3]:
-                return True
+                return False
     return False
 
 
 def worth_posting_track(track, hashtags, text):
+    if not track:
+        return False
     for t in track:
         if t.startswith("#"):
             if t[1:] in map(lambda x: x["text"], hashtags):
@@ -83,7 +85,7 @@ def worth_posting_follow(
     include_user_reply,
     include_retweet,
 ):
-    if tweeter_id not in twitter_ids:
+    if not twitter_ids or tweeter_id not in twitter_ids:
         worth_posting = False
         if include_reply_to_user:
             if in_reply_to_twitter_id in twitter_ids:
@@ -166,6 +168,8 @@ class Processor:
                 self.status_tweet["entities"]["hashtags"], key=lambda k: k["text"], reverse=True
             )
 
+        if not self.discord_config.get("track", []):
+            return False
         return worth_posting_track(
             track=self.discord_config.get("track", []), hashtags=hashtags, text=self.text
         )

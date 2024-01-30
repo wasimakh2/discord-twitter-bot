@@ -126,8 +126,7 @@ def pprint(config):
         "",
         "Discord-Twitter-Bot has a detailed documentation, found here:",
         "https://nntin.github.io/discord-twitter-bot",
-        "",
-        "Twitter Users: {}".format(len(follow)),
+        "".format(len(follow)),
         "Tracked Words: {}".format(len(track)),
         "Location Boxes: {}".format(int(len(location) / 4)),
         "Webhook URLs: {}".format(len(webhook_urls)),
@@ -143,7 +142,7 @@ def pprint(config):
             ("Include User Reply", instance.get("IncludeUserReply", True)),
             ("Include Retweet", instance.get("IncludeRetweet", True)),
             ("Custom Message", True if instance.get("custom_message", "") is not "" else False),
-            ("Keyword Sets", True if instance.get("keyword_sets", "") is not "" else False),
+            ("Keyword Sets", True if instance.get("keyword_sets", "") else False),
             ("Blackword Sets", True if instance.get("blackword_sets", "") is not "" else False),
         )
         for option, enabled in options:
@@ -160,6 +159,17 @@ def pprint(config):
             instance_info.append("Webhook URLs: {}".format(len(instance["webhook_urls"])))
 
         INFOS.append(instance_info)
+    for option, enabled in options:
+        instance_info.append("{} {}".format(enabled, option))
+
+        if instance.get("twitter_ids", []):
+            instance_info.append("Twitter Users: {}".format(len(instance["twitter_ids"])))
+        if instance.get("track", []):
+            instance_info.append("Track Words: {}".format(len(instance["track"])))
+        if instance.get("location", []):
+            instance_info.append("Location Boxes: {}".format(int(len(instance["location"]) / 4)))
+        if instance.get("webhook_urls", []):
+            instance_info.append("Webhook URLs: {}".format(len(instance["webhook_urls"])))
 
     i = 0
     while i < len(INFOS):
