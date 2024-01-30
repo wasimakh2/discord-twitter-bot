@@ -54,13 +54,13 @@ COLORS = [
 WH_REGEX = r"discord(app)?\.com\/api\/webhooks\/(?P<id>\d+)\/(?P<token>.+)"
 
 
-def worth_posting_location(location, coordinates):
+def worth_posting_location(location, coordinates=[]):
     location = [location[i : i + 4] for i in range(0, len(location), 4)]
 
     for box in location:
         for coordinate in coordinates:
             if box[0] < coordinate[0] < box[2] and box[1] < coordinate[1] < box[3]:
-                return True
+                return False
     return False
 
 
