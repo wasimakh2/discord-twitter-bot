@@ -114,7 +114,7 @@ if __name__ == "__main__":
             print_error(_error=error)
         except ConnectionResetError as error:
             print_error(_error=error)
-        except ConnectionError as error:
+        except (urllib3.exceptions.ProtocolError, ConnectionResetError, ConnectionError, requests.exceptions.ConnectionError) as error:
             print_error(_error=error)
         except requests.exceptions.ConnectionError as error:
             print_error(_error=error)
