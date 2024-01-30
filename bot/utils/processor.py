@@ -85,7 +85,7 @@ def worth_posting_follow(
     include_user_reply,
     include_retweet,
 ):
-    if tweeter_id not in twitter_ids:
+    if not twitter_ids or tweeter_id not in twitter_ids:
         worth_posting = False
         if include_reply_to_user:
             if in_reply_to_twitter_id in twitter_ids:
